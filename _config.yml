@@ -3,3 +3,8 @@ deploy:
   repo: https://github.com/iniconico/iniconico.github.io
   # example, https://github.com/hexojs/hexojs.github.io
   branch: gh-pages
+
+theme: next
+author: iniconico
+title: iniconico's blog
+subtitle: record, share and grow up
