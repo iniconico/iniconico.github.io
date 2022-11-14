@@ -152,6 +152,108 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-随笔/微服务架构设计模式—逃离单体地狱" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/14/%E9%9A%8F%E7%AC%94/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E9%80%83%E7%A6%BB%E5%8D%95%E4%BD%93%E5%9C%B0%E7%8B%B1/">微服务架构设计模式—逃离单体地狱</a>
+    </h1>
+  
+
+        
+        <a href="/2022/11/14/%E9%9A%8F%E7%AC%94/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E9%80%83%E7%A6%BB%E5%8D%95%E4%BD%93%E5%9C%B0%E7%8B%B1/" class="archive-article-date">
+  	<time datetime="2022-11-13T16:22:07.237Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-11-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近刚通读了一遍 <code>微服务架构设计模式这本书</code>，整本书讲述了一个单体项目改造成微服务的过程，以及在过程中遇到的种种困难，虽然很多东西都是泛泛而谈，但是对于我这种没接触过真正的微服务项目的新手来说，可以窥见其中的一些奥妙，以及这条道路上的种种困难，结合作者 <code>Chris Richardson</code> 的网站，还是能够大有启发的，至少现在你要我去改造一个单体项目为微服务架构，我绝不会觉得微服务各种完爆单体架构了，更多的是会思考单体真的不行吗，如果非要改造成微服务要付出多大的代价呢？只有深谙单体的利弊以及微服务的利弊才能做出理智的选择，道阻且长，微服务虽然是这几年的发展趋势，但是作为一名合格的软件工程师，为客户设计最高效的软件才是我们的本职工作，而不是一味的追求新技术。</p>
+<h2 id="单体地狱"><a href="#单体地狱" class="headerlink" title="单体地狱"></a>单体地狱</h2><p>为什么称之为单体地狱，书中的例子其实大部分的企业软件开发者都不会遇到，想想大家负责的项目每天有那么多的活跃用户吗，有那么大的并发量吗。言归正传，例子中的企业 <code>FTGO</code> 是一家大型线上餐饮平台，有点类似美团，饿了么这样的平台，并且它的用户基础量是很高的，但是他们一路发展过来的过程中一直使用的单体项目，为了快速响应市场变化，维护至今的单体项目每一次的新需求都让开发者们十分头疼，从需求确认到开发完成，再到测试，到线上部署，一路上充满了荆棘，并且每一次的开发周期会越来越长，这样发展下去是很容易被竞争对手干掉的，而这一切的根源跟项目是个单体有着千丝万缕的关系。</p>
+<p>但是作者也充分阐述了单体架构的优势，比如<code>开发</code>简单，易于进行大规模的更改，<code>测试</code>更直观（集成外部服务相对微服务更少），<code>部署</code>简单，方便横向<code>扩展</code>等等。听起来是不是十分诱人，但是这确实就是单体架构本身的优势，不然在软件行业快速发展了几十年的今天单体架构依旧位居主流，甚至是很多大型项目的开端依旧是单体项目，后续再根据需求扩展成微服务架构，这就充分说明了单体架构并不是如此的不堪，它甚至是我们快速响应需求，最低成本试错的最佳实践。</p>
+<p>当然没有十全十美的东西，像 <code>FTGO</code> 这样的平台如果一直用单体架构是走不远的，越往后发展，单体架构的种种弊端就像一根根藤蔓一样把 <code>FTGO</code>的脖子给缠住，最后甚至让其窒息，死亡。所以就像医生拯救病人，软件工程师就必须采取行动，将单体改造成微服务便是其中的一个良方。但是这味良方可不简单，微服务本身的美好和过程中的种种复杂性是息息相关的，所以这本书基本上是在讲解决微服务中的种种难题所提出的各种 <code>微服务设计模式</code>。</p>
+<h2 id="拯救之道：微服务"><a href="#拯救之道：微服务" class="headerlink" title="拯救之道：微服务"></a>拯救之道：微服务</h2><p>那么言归正传，为什么说微服务能拯救 <code>FTGO</code> 呢，作者也在这里提出了微服务架构的好处</p>
+<ul>
+<li>使大型复杂应用程序可以持续交付和持续部署</li>
+<li>每个服务都相对较小并容易维护</li>
+<li>各个服务可以独立部署</li>
+<li>更容易实验和采纳新技术</li>
+<li>更好的容错性</li>
+<li>………………..</li>
+</ul>
+<p>当然，并没有任何技术可以称之为 <code>银弹</code> ，微服务的弊端也是非常多的，作者同样列举了微服务的弊端</p>
+<ul>
+<li>服务的拆分是一项挑战</li>
+<li>分布式系统带来了各种复杂性，让开发，测试，部署的难度提升</li>
+<li>对开发者更高的要求</li>
+</ul>
+<p>然后整本书的内容就由此拉开了帷幕，作者通过微服务改造项目的过程中遇到的种种问题，采用微服务设计模式去一一破解，虽然并非细致到一行代码的落地，但是这种解决问题的方法才是我们应该使用的 <code>银弹</code></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这种设计思想的学习往往给人一种很虚的感觉，不像学习并发编程，学习Spring源码，看懂了，自己使用的过程中也会有更多的见解，对工作的问题也能更快速的响应，但是这些设计思想需要我们长期学习，自己不断琢磨，不断动手实践，敢于迈出步伐，希望我们都能在这条道路上有所收获</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">微服务</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/11/14/%E9%9A%8F%E7%AC%94/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E9%80%83%E7%A6%BB%E5%8D%95%E4%BD%93%E5%9C%B0%E7%8B%B1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Spring/动态代理的两种实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -239,6 +341,21 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态代理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -537,6 +654,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">动态代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
