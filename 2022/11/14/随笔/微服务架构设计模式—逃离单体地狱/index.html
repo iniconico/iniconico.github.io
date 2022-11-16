@@ -15,13 +15,16 @@
 <meta property="og:site_name" content="iniconico&#39;s blog">
 <meta property="og:description" content="前言最近刚通读了一遍 微服务架构设计模式这本书，整本书讲述了一个单体项目改造成微服务的过程，以及在过程中遇到的种种困难，虽然很多东西都是泛泛而谈，但是对于我这种没接触过真正的微服务项目的新手来说，可以窥见其中的一些奥妙，以及这条道路上的种种困难，结合作者 Chris Richardson 的网站，还是能够大有启发的，至少现在你要我去改造一个单体项目为微服务架构，我绝不会觉得微服务各种完爆单体架构了">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://iniconico-image.oss-cn-chengdu.aliyuncs.com/typora/image-20221116235544819.png">
+<meta property="og:image" content="https://iniconico-image.oss-cn-chengdu.aliyuncs.com/typora/image-20221116235459746.png">
 <meta property="article:published_time" content="2022-11-13T16:22:07.237Z">
-<meta property="article:modified_time" content="2022-11-14T17:03:55.842Z">
+<meta property="article:modified_time" content="2022-11-16T15:55:49.840Z">
 <meta property="article:author" content="iniconico">
 <meta property="article:tag" content="随笔">
 <meta property="article:tag" content="读书笔记">
 <meta property="article:tag" content="微服务">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://iniconico-image.oss-cn-chengdu.aliyuncs.com/typora/image-20221116235544819.png">
   
     <link rel="alternative" href="/atom.xml" title="iniconico&#39;s blog" type="application/atom+xml">
   
@@ -179,9 +182,11 @@
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近刚通读了一遍 <code>微服务架构设计模式这本书</code>，整本书讲述了一个单体项目改造成微服务的过程，以及在过程中遇到的种种困难，虽然很多东西都是泛泛而谈，但是对于我这种没接触过真正的微服务项目的新手来说，可以窥见其中的一些奥妙，以及这条道路上的种种困难，结合作者 <code>Chris Richardson</code> 的网站，还是能够大有启发的，至少现在你要我去改造一个单体项目为微服务架构，我绝不会觉得微服务各种完爆单体架构了，更多的是会思考单体真的不行吗，如果非要改造成微服务要付出多大的代价呢？只有深谙单体的利弊以及微服务的利弊才能做出理智的选择，道阻且长，微服务虽然是这几年的发展趋势，但是作为一名合格的软件工程师，为客户设计最高效的软件才是我们的本职工作，而不是一味的追求新技术。</p>
 <h2 id="单体地狱"><a href="#单体地狱" class="headerlink" title="单体地狱"></a>单体地狱</h2><p>为什么称之为单体地狱，书中的例子其实大部分的企业软件开发者都不会遇到，想想大家负责的项目每天有那么多的活跃用户吗，有那么大的并发量吗。言归正传，例子中的企业 <code>FTGO</code> 是一家大型线上餐饮平台，有点类似美团，饿了么这样的平台，并且它的用户基础量是很高的，但是他们一路发展过来的过程中一直使用的单体项目，为了快速响应市场变化，维护至今的单体项目每一次的新需求都让开发者们十分头疼，从需求确认到开发完成，再到测试，到线上部署，一路上充满了荆棘，并且每一次的开发周期会越来越长，这样发展下去是很容易被竞争对手干掉的，而这一切的根源跟项目是个单体有着千丝万缕的关系。</p>
+<p><img src="https://iniconico-image.oss-cn-chengdu.aliyuncs.com/typora/image-20221116235544819.png" alt="image-20221116235544819"></p>
 <p>但是作者也充分阐述了单体架构的优势，比如<code>开发</code>简单，易于进行大规模的更改，<code>测试</code>更直观（集成外部服务相对微服务更少），<code>部署</code>简单，方便横向<code>扩展</code>等等。听起来是不是十分诱人，但是这确实就是单体架构本身的优势，不然在软件行业快速发展了几十年的今天单体架构依旧位居主流，甚至是很多大型项目的开端依旧是单体项目，后续再根据需求扩展成微服务架构，这就充分说明了单体架构并不是如此的不堪，它甚至是我们快速响应需求，最低成本试错的最佳实践。</p>
 <p>当然没有十全十美的东西，像 <code>FTGO</code> 这样的平台如果一直用单体架构是走不远的，越往后发展，单体架构的种种弊端就像一根根藤蔓一样把 <code>FTGO</code>的脖子给缠住，最后甚至让其窒息，死亡。所以就像医生拯救病人，软件工程师就必须采取行动，将单体改造成微服务便是其中的一个良方。但是这味良方可不简单，微服务本身的美好和过程中的种种复杂性是息息相关的，所以这本书基本上是在讲解决微服务中的种种难题所提出的各种 <code>微服务设计模式</code>。</p>
 <h2 id="拯救之道：微服务"><a href="#拯救之道：微服务" class="headerlink" title="拯救之道：微服务"></a>拯救之道：微服务</h2><p>那么言归正传，为什么说微服务能拯救 <code>FTGO</code> 呢，作者也在这里提出了微服务架构的好处</p>
+<p><img src="https://iniconico-image.oss-cn-chengdu.aliyuncs.com/typora/image-20221116235459746.png" alt="image-20221116235459746"></p>
 <ul>
 <li>使大型复杂应用程序可以持续交付和持续部署</li>
 <li>每个服务都相对较小并容易维护</li>
